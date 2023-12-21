@@ -1,5 +1,5 @@
 
-## 소프트웨어 아키텍쳐 모델 : 관심의 분리 
+* 소프트웨어 아키텍쳐 모델 : 관심의 분리 
 
 ## MVC (Model, View, Controller) : 역할 별로 분리하여 개발 
 * 주 목적 : 화면이 주목적인 소프트웨어 개발에 적용
@@ -9,7 +9,7 @@
     * express, spring ==> MVC 적용 
     * express(node기반의 백엔드앱의 Controll을 위한 프레임워크)
 
-## react : View를 중심으로 한 프론트앱의 프레임워크, 동적 데이터을 반영하는 대규모 웹앱 구축을 위해 만들어짐 
+* react : View를 중심으로 한 프론트앱의 프레임워크, 동적 데이터을 반영하는 대규모 웹앱 구축을 위해 만들어짐 
 
 # React 소개
 - SPA : Single Page Application
@@ -38,10 +38,20 @@
 ## 개발 환경 설정 도구 
 ### CRA (Create-react-app) 방법 
 - npx create-react-app 프로젝트명
+
+- 모듈 설치는 보통 npm 
+- 명령어(create-react-app) 입력시는 npx
+- -g 로 설치했다라고 하면,
+    - npm uninstall -g create-react-app
+    - npx clear-npx-cache
+
+- 설치 중 에러, 캐싱이 문제라면
+    - npm cache clean --force (강제로 캐시 지우기)
+    - npm cache verify (캐시 지운 후 검사)
+    
 ### vite 방법: vue전용 빌드 도구로 탄생, 리액트 지원 
 *webpack : 모듈 번들러 
 *boilerplate : 프로젝트 구조 샘플
-
 
 
 

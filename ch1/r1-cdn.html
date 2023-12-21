@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React CDN</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script><!-- babel transplie : JSX를 JS코드로 변환 -->
+    <script type="text/babel">// babel로 변환 
+        // 컴포넌트 선언(함수 또는 클래스로 선언) => 리턴값이 화면에 랜더링
+        let Hello = function(props){    
+            return <h1>hello react</h1> // JSX 형식 
+        }
+        
+        // 화면 출력
+        ReactDOM.createRoot(document.getElementById('app')).render(<Hello/>)
+    </script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>

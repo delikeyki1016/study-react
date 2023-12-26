@@ -13,7 +13,8 @@ const Footer = (props) => {
         background-color: ${() => (props.theme === 'basic' ? 'skyblue' : 'yellow')};
         text-align: center;
     `
-    return <FooterBox theme={props.theme}>React Styled Component Test</FooterBox>
+    // return <FooterBox theme={props.theme}>React Styled Component Test</FooterBox>
+    return <FooterBox>React Styled Component Test</FooterBox>
 }
 
 export default Footer

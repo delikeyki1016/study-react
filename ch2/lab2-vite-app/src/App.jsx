@@ -11,7 +11,7 @@ const App = () => {
   const addResult = (x, y) => {
     return (
       <div className="card card-body bg-light mb-3">
-        {/* jsx 내에서 동적데이터 추가는 {}보관법 을 이용 */}
+        {/* jsx 내에서 동적데이터 추가는 {}보간법 을 이용 */}
         {x} + {y} = {x + y}
       </div>
     )

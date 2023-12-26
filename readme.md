@@ -9,10 +9,12 @@
     * express, spring ==> MVC 적용 
     * express(node기반의 백엔드앱의 Controll을 위한 프레임워크)
 
+* 동적 UI 컴포넌트를 만들기 위한 프레임웍 : angular,vue,react
 * react : View를 중심으로 한 프론트앱의 프레임워크, 동적 데이터을 반영하는 대규모 웹앱 구축을 위해 만들어짐 
 
 # React 소개
-- SPA : Single Page Application
+- html이 화면당 여러개 일때, 각각이 html이 각각의 메모리 공간을 차지함. JS간의 데이터 공유가 불가능 
+- SPA : Single Page Application (물리적인 html이 한개이기 때문에 1개의 메모리 공간안에서 JS간의 상태 유지가 가능)
 
 - 상태관리 : application의 data => State(상태)
 
@@ -66,7 +68,7 @@
     - div class="test" => JS의 API인 div className="test"
 * {} 보간법(interpolation) 사용 : {} 내부에 결과값이 있는 것을 사용함(즉 표현식(expression) 만 가능, 구문(statement)는 불가능)
 
-## 컴포넌트의 데이터 : props, state 
+### 컴포넌트의 데이터 : props, state 
 
 ## props
 : 상위 컴포넌트가 나에게 전달하는 데이터 (properties)
@@ -74,6 +76,7 @@
 * 기본값(number, string, boolean)은 변경 불가능 
 * 객체는 주소값을 참조하고 있는 reference 변수이다. 객체자체를(주소) 변경할 순 없지만 객체 내부 값은(주소가 실제 가르키고 있는 값) 변경이 가능하다.
     - 그러나 객체의 내부값도 변경하지 않는 것을 권장
+* type 검증 : npm install prop-types
 
 ## state
 : 내 컴포넌트에서 선언하고 관리되는 데이터 
@@ -86,6 +89,52 @@
 - 컴포넌트 세분화 : 개발생산성, 유지보수성, 재사용성, 성능최적화 등을 고려하여 나눈다.
 - re-rendering은 컴포넌트 단위로 랜더링된다.(성능 최적화)
 - 장점: 에러 가능성 줄고, 디버깅이 쉬워짐.
+
+### CSS 
+1. global.css
+    - import 'bootstrap/dist/css/bootstrap.css' => 모든 jsx에서 사용 가능 
+
+2. inline css
+    - css를 json object 형식으로 js파일로 선언하고 import해서 사용 
+    style.js로 아래 선언 
+    ```
+    const styles = {
+        textStyle: {
+            textDecoration: "underline", 
+        },
+    }
+    ```
+    ```
+    import styles from './style'
+    <p style={styles.textStyle}>hello world</p>
+    ```
+
+3. module.css
+    - 모듈로 import 한 것은 해당 컴포넌트 명으로 해당 파일내에서만 사용 가능
+    - css파일명을 four.module.css 로 저장 후 .wrapper 선언 
+    ```
+    import styles from './four.module.css'
+    <div className={styles.wrapper}>
+    ```
+
+4. styled component
+* 설치 : npm install styled-components @types/styled-components
+- template literal :
+```
+`hello ${name}`
+```
+
+- tagged template literal : 함수호출 시 매개변수를 템플릿 리터럴로 사용 (arg1, arg2)
+    - arg1에는 정적데이터, arg2에는 동적데이터가 자동으로 삽입
+    - 동적 styled component를 만들 수 있는 함수가 있어야 해서 예를 들면 아래와 같이 선언 
+```
+div`hello ${name}`
+```
+=> div라는 함수에 매개변수를 템플릿리터럴로 선언 hello는 정적데이터로 arg1, name은 동적데이터로 arg2에 삽입된다.
+
+### React 이벤트
+- 우리가 작업하는 virtual DOM에 이벤트핸들러를 등록하면, 상위 root container에 연결하여(대행자) root container가 이벤트를 real DOM에 위임함.
+객체에 이벤트를 거는 것이므로 onClick (React Event)
 
 
 

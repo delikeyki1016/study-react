@@ -3,7 +3,7 @@ import { useState } from 'react'
 const AsyncStateChange = () => {
     const [count, setCount] = useState(0)
 
-    // 비동기로 상태 변경이 된다.
+    // 비동기로 상태 변경이 된다. 함수가 동기적으로 처리되지 않기 때문에 원하는 결과(순차적 실행)가 나오지 않는다.
     const asyncIncrement = () => {
         setCount(count+1)
         setCount(count+1)

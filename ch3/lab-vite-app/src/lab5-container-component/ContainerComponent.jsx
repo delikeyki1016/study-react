@@ -6,6 +6,7 @@ import PresentationalComponent2 from './PresentationalComponent2'
 // 공통의 데이터를 이용하는 자식컴포넌트의 부모 역할
 const ContainerComponent = () => {
     const [count, setCount] = useState(0)
+    
     const myIncrement = () => {
         setCount(count + 1)
     }

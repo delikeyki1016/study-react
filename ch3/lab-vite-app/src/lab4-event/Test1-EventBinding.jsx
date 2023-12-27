@@ -32,8 +32,7 @@ const EventBinding = () => {
                 {/* 익명함수를 이벤트 콜백함수로 등록 */}
                 <button onClick={()=> setCount(count - 1)} className='btn btn-secondary'>감소</button>
                 {/* 이벤트 함수를 호출하면서 데이터 전달 */}
-                <hr />
-                <div>
+                <div className="mt-1">
                     <button onClick={(e)=> incrementStep(2, e)} className='btn btn-secondary'>increment Step 2</button>
                     &nbsp;
                     <button onClick={incrementStep.bind(this, 3)} className='btn btn-primary'>increment Step 3</button>

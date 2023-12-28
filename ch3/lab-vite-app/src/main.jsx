@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     {/* <CSSTest /> */}
     {/* <StyledComponent /> */}
     {/* <PropTypeComponent /> */}
-    {/* <EventComponent /> */}
-    <ContainerComponent />
+    <EventComponent />
+    {/* <ContainerComponent /> */}
   </React.StrictMode>,
 )

@@ -15,9 +15,9 @@ const AppContainer = () => {
 
     // 할일등록 컴포넌트 
     const addTodo = (todo) => {
-        setNum(num + 1)
+        setNum((num)=>num + 1) // 동기적처리를 해도 num+1이 안되는 이유...
         let newTodoList = produce(todoList, (draft)=>{
-            draft.push({no: num + 1, todo: todo, done: false})
+            draft.push({no: num, todo: todo, done: false})
         })
         setTodoList(newTodoList)
     }

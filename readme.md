@@ -156,14 +156,14 @@ setter함수는 비동기로 처리 되기 때문에 2,3번째 호출이 바로 
 - Uncontrolled Component : 사용자 입력 값이 state, props에 의해 제어되지 않는 컴포넌트, 입력값을 알아내려면 실제DOM을 접근해야 함.(고비용,단점)
     - 사용자입력값을 알아내려면 ref 사용. (권장하지 않음)
 
-## 역할에 따른 컴포넌트 분류
-- Container Component : 업무로직 관련한 컴포넌트 
-- Presentational Component : 화면 관련한 컴포넌트
-=> 하나의 관련내용에서 컨테이너와 프리젠테이션으로 분리 => 관리효율, 유지보수성 높아짐
-
 ## 상태보유 여부에 따른 컴포넌트 분류
 - Stateless Component : 상태 미보유
 - Stateful Component : 상태 보유
+
+## 역할에 따른 컴포넌트 분류
+- Container Component : 업무로직 관련한 컴포넌트 (하위 컴포넌트들이 공통으로 사용하는 상태들을 선언)
+- Presentational Component : 화면 관련한 컴포넌트
+=> 하나의 관련내용에서 컨테이너와 프리젠테이션으로 분리 => 관리효율, 유지보수성 높아짐
 
 ### 설계
 ## 화면 단위의 설계 순서
@@ -192,22 +192,38 @@ import {produce} from 'immer'
 # 클래스 컴포넌트 
 - 다양한 생명주기 이벤트 메서드를 사용할 수 있음 
 - 작성은 더 복잡하지만 자바,C3 개발자라면 익숙함 
-- 기본형태, this.props 는 예약어
-```
-import React, {Component} from 'react'
+- state, setState, this.props 는 예약어
 
-class TestClass extends Component {
-    state = {
-        name: "홍길동"
-    };
-    render() {
-        return (
-            <div>hello {this.props.name}</div>
-        )
-    }
-}
-```
+# Lifecycle (생명주기)
+1. Mounting : 컴포넌트의 인스턴스가 만들어지고 DOM 트리에 추가
+    - 1.1 : constructor(props) 생성자 (props가 매개변수, 첫번째 호출 함수)
+        - 부모로부터 속성을 상속받아 자신의 상태를 재정의하여 초기화(최초 한번)
+        - 첫 줄에 반드시 super(props)가 포함되어야 함 => 상위 생성자 호출
+    - 1.2 : render() 
+        - return된 객체들이 virtual dom에 랜더링
+        - 이 메서드 내부에서 setState()를 해서는 안됨 => 무한루프
+    - 1.3 : componentDidMount()
+        - DOM 트리에 마운트 완료된 후에 호출(최초 한번, 아직 real dom엔 반영되지 않음)
+
+2. Updating
+    - static getDerivedStateFromProps : props가 변경되어 컴포넌트에 전달되면 이 값을 이용해서 state가 동기화될 때 사용함 
+    - shouldComponentUpdate : render() 실행되기 전에 리랜더링이 필요한 지 여부를 판단(리턴값으로 bool 선언)
+    - getSnapshotBeforeUpdate() : render() 호출된 직후 virtual dom 업데이트가 되고 나면 호출(real dom 전)
+    - componentDidUpdate() : DOM 업데이트가 일어난 직후 실행.
+
+3. UnMounting
+    - componentWillUnmount : 컴포넌트 언마운트될 때 실행(ex. 화면전환)
 
 
+# 가상DOM과 조정작업
+- DOM조작은 빠르지만 브라우저에서 reflow, repaint 과정이 느림
+- reflow : layout을 잡는다. 랜더링할 돔트리를 새로 만들고, html 엘리먼트 각각의 위치를 계산하고 배치함
+- repaint : html 엘리먼트에 스타일을 입히고 그려냄 
+=> React는 virtual dom을 조작함으로(reflow,repaint가 일어나지않음) real dom과 비교하여 변경된 부분만을 reflow,repaint 함 ==> 조정작업(Reconciliation)
+- 반복요소에 key를 추가해야하는 것은 내부적으로 반복요소의 변경사항을 추적하기 힘들기 때문에 가급적 고유한 값으로 붙이는 것을 권장함
+: key가 없으면 전체를 리랜더링 해야해서 느림
+- shouldComponentUpdate
+    - shallow compare : 얕은 비교 (객체의 변경사항(주소) 비교) immer모듈
+    - deep compare : 깊은 비교 (값 자체 비교) => 시간 소요 많음 
 
 

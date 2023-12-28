@@ -25,7 +25,9 @@ const UncontrolledComponent = () => {
         <div>
             <hr />
             <h3>비제어 컴포넌트</h3>
-            {/* value가 들어가면 제어컴포넌트 */}
+            {/* 브라우저 자체를 조작해서 효과를 내야할 때(ex. 자동 포커스 기능, 자동 스크롤 기능) */}
+            {/* 빈번히 사용하면 안됨. real-dom을 핸들링 하는것이므로 고비용 */}
+            {/* value 값이 지정되지 않는다. */}
             <p>x: <input type="text" id="x" defaultValue={x} ref={elemX} /></p>
             <p>y: <input type="text" id="y" defaultValue={y} ref={elemY} /></p>
             <button onClick={add}>add</button>

@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 // global css : 모든 jsx에서 사용가능
 import 'bootstrap/dist/css/bootstrap.css' 
@@ -13,7 +12,6 @@ import ContainerComponent from './lab5-container-component/ContainerComponent.js
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <App /> */}
     {/* <CSSTest /> */}
     {/* <StyledComponent /> */}
     {/* <PropTypeComponent /> */}

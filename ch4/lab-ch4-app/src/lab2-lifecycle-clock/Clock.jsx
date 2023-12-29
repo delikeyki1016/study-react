@@ -33,7 +33,6 @@ class Clock extends Component {
             <div className='boxStyle'>
                 {/* 첫번째 매개변수의 시간을 두번째 매개변수의 포맷대로 출력 */}
                 <h3>{DateAndTime.format(this.state.currentTime, this.props.formatString)}</h3>
-                {/* {this.setState} */}
             </div>
         )
     }

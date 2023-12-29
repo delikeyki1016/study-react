@@ -4,7 +4,7 @@ import TodoListItem from './TodoListItem'
 
 class TodoList extends Component {
 
-    // 랜더링 여부를 판단, 변경된 데이터를 이전 데이터를 비교한다.
+    // 랜더링 여부를 판단, 변경된 데이터를 이전 데이터를 비교한다. => 성능최적화에 역할을 한다. 
     shouldComponentUpdate(nextProps, nextState) {
         if(nextProps.todoList !== this.props.todoList) { //객체가 바뀐게 있다면 render하고 (값까지 비교한 것은 아니다)
             return true

@@ -1,12 +1,20 @@
-import {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-class TodoListItem extends Component {
+// class TodoListItem extends React.Component {
+class TodoListItem extends React.PureComponent {
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if(nextProps.todoItem !== this.props.todoItem) return true 
-        else return false
-    }
+    // React.Component를 상속받을 때 사용. 
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if(nextProps.todoItem !== this.props.todoItem) return true 
+    //     else return false
+    // }
+
+    // React.PureComponent를 상속받으면, shouldComponentUpdate를 구현하지 않아도 된다.
+    // PureComponent는 Component의 서브 클래스이고, shouldComponentUpdate()함수가 오버라이드되어,
+    // props, state 객체 비교 알고리즘이(얕은비교) 이미 구현되어있는 클래스
+
+    // 이미 랜더링된 아이템들은 재랜더링되지 않고, 신규 추가 아이템만 렌더됨.
     
     render() {
         console.log('랜더: TodoListItem...')

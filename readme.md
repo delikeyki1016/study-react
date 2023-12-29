@@ -194,7 +194,7 @@ import {produce} from 'immer'
 - 작성은 더 복잡하지만 자바,C3 개발자라면 익숙함 
 - state, setState, this.props 는 예약어
 
-# Lifecycle (생명주기)
+# Lifecycle (생명주기) 함수
 1. Mounting : 컴포넌트의 인스턴스가 만들어지고 DOM 트리에 추가
     - 1.1 : constructor(props) 생성자 (props가 매개변수, 첫번째 호출 함수)
         - 부모로부터 속성을 상속받아 자신의 상태를 재정의하여 초기화(최초 한번)
@@ -205,7 +205,7 @@ import {produce} from 'immer'
     - 1.3 : componentDidMount()
         - DOM 트리에 마운트 완료된 후에 호출(최초 한번, 아직 real dom엔 반영되지 않음)
 
-2. Updating
+2. Updating (re-rendering)
     - static getDerivedStateFromProps : props가 변경되어 컴포넌트에 전달되면 이 값을 이용해서 state가 동기화될 때 사용함 
     - shouldComponentUpdate : render() 실행되기 전에 리랜더링이 필요한 지 여부를 판단(리턴값으로 bool 선언)
     - getSnapshotBeforeUpdate() : render() 호출된 직후 virtual dom 업데이트가 되고 나면 호출(real dom 전)
@@ -223,7 +223,40 @@ import {produce} from 'immer'
 - 반복요소에 key를 추가해야하는 것은 내부적으로 반복요소의 변경사항을 추적하기 힘들기 때문에 가급적 고유한 값으로 붙이는 것을 권장함
 : key가 없으면 전체를 리랜더링 해야해서 느림
 - shouldComponentUpdate
+    - render() 함수가 콜 되는 시점
     - shallow compare : 얕은 비교 (객체의 변경사항(주소) 비교) immer모듈
     - deep compare : 깊은 비교 (값 자체 비교) => 시간 소요 많음 
+- React.Component 에서는 shouldComponentUpdate가 무조건 true라서 따로 개발자 코드를 넣어주는데, 
+- React.PureComponent : shouldComponentUpdate가 이미 구현되어있는 컴포넌트이다.
 
+### React hook 
+: 함수형 컴포넌트에서 상태와 생명주기 관련 기능을 사용할 수 있도록 함
+: 생명주기 함수는 componentDidMount, componentDidUpdate, componentWillUnmount 의 기능만 사용 가능
 
+# useState : 상태 데이터
+
+# useEffect : 기본은 componentDidMount, componentDidUpdate 시에 호출됨, 두번째 매개변수를 지정하면, 해당 값이 바뀔 때에만 호출(update상황),
+return에 함수를 정의하면 componentWillUnmount 기능 구현됨(cleanup 함수)
+
+# useReducer : reducer(순수함수) 이용 => Redux(프레임웍) 
+: 과거의 리턴값(상태)을 그 다음 호출 시에 전달 
+    - 순수함수(pure function) : 몇번을 콜하던지 간에 입력 매개변수가 동일할 때 항상 동일한 리턴값을 가짐. 
+        함수에 전달된 매개변수(인자)는 불변성인 것(매개변수 값이 함수 입력 전과 입력 후가 같음)
+    - side effect(결과가 상이해짐) 발생하는 경우 : random(), I/O, file
+- 인자 : (state, action) => {} 
+    - state: 리턴받은 이전 상태
+    - action: 이벤트. 상태 관리 구분(add, delete) / action(type, payload) => type: add, delete / payload: 값(옵션) ==> 이전 상태를 이용해 새로운 상태를 만들어서 리턴함
+    - => 과거의 상태가 변경되는 것이 아님. 불변 => 새로운 상태 리턴 ==> 상태에 대한 변경 추적 가능(time travel debugging 효과적임)
+
+- 상태관리 기능을 컴포넌트로부터 분리시킬 수 있음. 
+- const [state, dispatch] = useReducer(reducer, initialState) *dispatch : 액션 발생 함수
+
+# useRef 
+- 기능1: browser dom 에 대한 직접적인 접근을 허용
+- 기능2: 함수형 컴포넌트에서 상태가 아닌 데이터 관리, 유저가 입력한 값을 저장해둠. 다른 요소에 의해 리랜더링이 일어날 때, 저장해둔 값이 노출될 수 있다.
+
+# useMemo
+- 함수의 실행결과를 자동으로 캐싱해둠
+- useMemo(func, array) => array가 변경될 때만 func를 실행하여 값을 캐싱함
+
+# use

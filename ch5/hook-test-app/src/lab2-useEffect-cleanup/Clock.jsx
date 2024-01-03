@@ -11,7 +11,7 @@ const Clock = (props) => {
             console.log('틱톡 클락')
         }, 1000)
 
-        // 언마운트 시에 실행되게 처리하려면 함수를 리턴시킨다.
+        // 언마운트 시에 실행되게 처리하려면 함수를 리턴시킨다.(cleanup 함수)
         return ()=> {
             clearInterval(handle)
         }

@@ -17,10 +17,10 @@ export const TodoActionCreator = {
     deleteTodo: (id) => ({type: TODO_ACTION.DELETE, payload: {id: id}})
 }
 
-// reducer 함수 정의(어디선가 액션을 발생시키면, 새로운 상태를 리턴시킴)
+// reducer: state 업데이트 방식을 지정하는 순수함수 
+// reducer 함수 정의(어디선가 액션을 발생시키면, 새로운 상태를 리턴시킴) => 순수함수로 만들어야 함 
 // state : 이전 상태값, 참조만 한다. 
-// action : 발생된 action 즉 {type: TODO_ACTION.ADD, payload: {todo: todo}}
-// 순수함수임
+// action : 발생된 action, 상태변경요청. 즉 {type: TODO_ACTION.ADD, payload: {todo: todo}}
 export const TodoReducer = (state, action) => {
     console.log(state, action)
     switch(action.type) {

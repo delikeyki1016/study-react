@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
+import { JSX } from 'react/jsx-runtime';
 
 const BoxStyle = styled('div')(({}) => ({
   width: '40%',
@@ -18,12 +19,13 @@ const HandStyle = styled('div')(({}) => ({
 
 // Props 타입 정의
 interface IProps {
+  item: { name: string; icon: JSX.Element };
   name: string;
-  hand: React.ReactNode;
   result: string;
 }
 
 const RockBox: React.FC<IProps> = (props) => {
+  console.log('props:', props);
   return (
     <BoxStyle
       sx={{
@@ -36,7 +38,14 @@ const RockBox: React.FC<IProps> = (props) => {
       }}
     >
       <h2>{props.name}</h2>
-      <HandStyle>{props.hand}</HandStyle>
+      <HandStyle>{props.item.icon}</HandStyle>
+      <p>
+        {props.result === '이겼다'
+          ? 'winner'
+          : props.result === '졌다'
+          ? 'looser'
+          : 'same'}
+      </p>
     </BoxStyle>
   );
 };

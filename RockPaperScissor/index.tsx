@@ -4,54 +4,70 @@ import { Button } from '@mui/material';
 import RocketIcon from '@mui/icons-material/Rocket';
 import ContentCutIcon from '@mui/icons-material/ContentCut';
 import BackHandIcon from '@mui/icons-material/BackHand';
+import { JSX } from 'react/jsx-runtime';
 
-type Hand = 'Rock' | 'Scissor' | 'Paper';
+type choiceType = {
+  [key: string]: {
+    name: string;
+    icon: JSX.Element;
+  };
+};
+const choice: choiceType = {
+  rock: {
+    name: 'Rock',
+    icon: <RocketIcon />,
+  },
+  scissor: {
+    name: 'Scissor',
+    icon: <ContentCutIcon />,
+  },
+  paper: {
+    name: 'Paper',
+    icon: <BackHandIcon />,
+  },
+};
+
+type ChoiceKey = keyof typeof choice;
 
 const RockScissorPaper = () => {
-  const [myHand, setMyHand] = useState<Hand>('Rock');
-  const [comHand, setComHand] = useState<Hand>('Rock');
+  const [myHand, setMyHand] = useState<ChoiceKey | null>(null);
+  const [comHand, setComHand] = useState<ChoiceKey | null>(null);
   const [result, setResult] = useState<string>('result');
   const [comResult, setComResult] = useState<string>('result');
 
-  const handMark = (hand: string) => {
-    // console.log('hand', hand);
-    switch (hand) {
-      case 'Rock':
-        return <RocketIcon />;
-      case 'Scissor':
-        return <ContentCutIcon />;
-      case 'Paper':
-        return <BackHandIcon />;
-      default:
-        return null;
-    }
-  };
-
-  const getRandomHand = (): Hand => {
-    const hands: Hand[] = ['Rock', 'Scissor', 'Paper'];
+  const getRandomHand = (): ChoiceKey => {
+    // choice 객체의 키를 배열로 추출
+    const hands: ChoiceKey[] = [...Object.keys(choice)] as ChoiceKey[];
     const randomIndex = Math.floor(Math.random() * hands.length);
     return hands[randomIndex];
   };
 
-  const game = (item: Hand) => {
+  const game = (item: ChoiceKey) => {
+    console.log('item?', item);
     setMyHand(item);
     const comSelect = getRandomHand();
     setComHand(comSelect);
   };
 
-  const gameResult = (myHand: Hand, comHand: Hand): string => {
-    if (myHand === 'Rock') {
-      if (comHand === 'Rock') return '비겼다';
-      if (comHand === 'Paper') return '졌다';
-      if (comHand === 'Scissor') return '이겼다';
-    } else if (myHand === 'Paper') {
-      if (comHand === 'Rock') return '이겼다';
-      if (comHand === 'Paper') return '비겼다';
-      if (comHand === 'Scissor') return '졌다';
-    } else if (myHand === 'Scissor') {
-      if (comHand === 'Rock') return '졌다';
-      if (comHand === 'Paper') return '이겼다';
-      if (comHand === 'Scissor') return '비겼다';
+  const gameResult = (
+    myHand: ChoiceKey | null,
+    comHand: ChoiceKey | null
+  ): string => {
+    if (myHand === null || comHand === null) {
+      return '결과를 알 수 없습니다.';
+    }
+    if (myHand === 'rock') {
+      if (comHand === 'rock') return '비겼다';
+      if (comHand === 'paper') return '졌다';
+      if (comHand === 'scissor') return '이겼다';
+    } else if (myHand === 'paper') {
+      if (comHand === 'rock') return '이겼다';
+      if (comHand === 'paper') return '비겼다';
+      if (comHand === 'scissor') return '졌다';
+    } else if (myHand === 'scissor') {
+      if (comHand === 'rock') return '졌다';
+      if (comHand === 'paper') return '이겼다';
+      if (comHand === 'scissor') return '비겼다';
     }
     return '결과를 알 수 없습니다.';
   };
@@ -77,28 +93,36 @@ const RockScissorPaper = () => {
     <div>
       <h1>가위바위보 게임</h1>
       <div className="m10 d-flex x-center gap10">
-        <RockBox name="you" hand={handMark(myHand)} result={result} />
-        <RockBox name="computer" hand={handMark(comHand)} result={comResult} />
+        <RockBox
+          name="you"
+          item={myHand ? choice[myHand] : { name: '', icon: <div /> }}
+          result={result}
+        />
+        <RockBox
+          name="computer"
+          item={comHand ? choice[comHand] : { name: '', icon: <div /> }}
+          result={comResult}
+        />
       </div>
       <div className="d-flex x-center gap5">
         <Button
           variant="contained"
           startIcon={<RocketIcon />}
-          onClick={() => game('Rock')}
+          onClick={() => game('rock')} //onClick사용시에 ()=> 의 콜백함수로 넣어줘야 리랜더링될 때 실행되지 않음
         >
           Rock
         </Button>
         <Button
           variant="contained"
           startIcon={<ContentCutIcon />}
-          onClick={() => game('Scissor')}
+          onClick={() => game('scissor')}
         >
           Scissor
         </Button>
         <Button
           variant="contained"
           startIcon={<BackHandIcon />}
-          onClick={() => game('Paper')}
+          onClick={() => game('paper')}
         >
           Paper
         </Button>
